@@ -31,10 +31,14 @@ public class StorageService {
 	private final Path rootLocation = Paths.get("D:/uploads");
 
 	public void store(MultipartFile file) {
+		String testFileName = System.currentTimeMillis()+"_"+file.getOriginalFilename();
+		
 		try {
 			System.out.println("3");
-			Files.copy(file.getInputStream(), this.rootLocation.resolve(file.getOriginalFilename()));
-			fileRepository.insertFile(file);
+//			Files.copy(file.getInputStream(), this.rootLocation.resolve(file.getOriginalFilename()));
+//			fileRepository.insertFile(file);
+			Files.copy(file.getInputStream(), this.rootLocation.resolve(testFileName));
+			fileRepository.insertFile(testFileName, file);
 			System.out.println("4");
 		} catch (Exception e) {
 			throw new RuntimeException("FAIL!");
@@ -48,8 +52,13 @@ public class StorageService {
 
 	public Resource loadFile(String filename) {
 		try {
+			System.out.println("loadFile() # filename = "+filename);
+			
 			Path file = rootLocation.resolve(filename);
+			
 			System.out.println("pathfile = "+file);
+			System.out.println("loadFile() # file.toUri() = "+file.toUri());
+			
 			Resource resource = new UrlResource(file.toUri());
 			if (resource.exists() || resource.isReadable()) {
 				return resource;

@@ -21,11 +21,14 @@ public class FileRepositoryImpl implements FileRepository {
 
 	@Override
 	public int insertFile(MultipartFile file) {
-
 		String sql = "insert into files (f_name, f_path) values(?, ?)";
-
 		return jdbcTemplate.update(sql, file.getOriginalFilename(), "D:/uploads");
-
+	}
+	
+	@Override
+	public int insertFile(String s, MultipartFile file) {
+		String sql = "insert into files (f_name, f_path) values(?, ?)";
+		return jdbcTemplate.update(sql, s, "D:/uploads");
 	}
 
 //	@Override

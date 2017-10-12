@@ -38,12 +38,14 @@ public class UploadController {
 //	@PostMapping(value= {"/post"} ,consumes = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
 		String message = "";
+		String testFileName = System.currentTimeMillis()+"_"+file.getOriginalFilename();
 		try {
 			System.out.println("1");
 			storageService.store(file);
 			System.out.println("2");
-			files.add(file.getOriginalFilename());
-			System.out.println(files);
+//			files.add(file.getOriginalFilename());
+			files.add(testFileName);
+			System.out.println("handleFileUpload() # files = "+files);
 
 			message = "You successfully uploaded " + file.getOriginalFilename() + "!";
 			return ResponseEntity.status(HttpStatus.OK).body(message);
@@ -70,9 +72,10 @@ public class UploadController {
 	@ResponseBody
 	public ResponseEntity<Resource> getFile(@PathVariable String filename) {
 		System.out.println("5");
+		System.out.println("getFile() # filename="+filename);
 		Resource file = storageService.loadFile(filename);
-		System.out.println("file"+file);
-
+		System.out.println("6");
+		
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
 				.body(file);
