@@ -5,7 +5,7 @@
 }
 
 
-/*.userListWrapper {
+.userListWrapper {
     background-color: #2A2845;
     color: #fff;
     display: flex;
@@ -15,13 +15,12 @@
     order: 1;
     padding:20px 0px 40px 30px;
     border-right: 1px solid #222;
-}*/
+}
 
 .feedWrapper {
   background-color: #fff;
-  /*background:
-        linear-gradient(181deg, rgba(100,200,255,0.6), rgba(0, 0, 0, 0.9)),
-        url('../../assets/img/chat-bg-1.png') center center no-repeat;;*/
+  background:
+        linear-gradient(181deg, rgba(100,200,255,0.6), rgba(0, 0, 0, 0.9));
   font-family: "Open Sans", sans-serif;
   font-size: 1.2em;
   flex: 5;
@@ -41,8 +40,3 @@
   border-radius: 10px;
   background-color: #F5F5F5;
 }
-
-
-/*app-user-list {
-    width: 100%;
-}*/

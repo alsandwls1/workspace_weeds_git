@@ -30,7 +30,6 @@ import {HttpClientModule} from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
-import { MemberComponent } from './member/member.component';
 import { HomeComponent } from './home/home.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FooterComponent } from './footer/footer.component';
@@ -73,7 +72,6 @@ import { MessageComponent } from './demo-pro/demo-content/demo-chat/message/mess
 @NgModule({
   declarations: [
     AppComponent,
-    MemberComponent,
     HomeComponent,
     NavBarComponent,
     LoginComponent,

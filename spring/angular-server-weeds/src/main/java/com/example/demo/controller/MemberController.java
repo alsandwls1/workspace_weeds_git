@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.domain.Member;
 import com.example.demo.repository.MemberRepository;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 @RestController
 public class MemberController {
 	@Autowired
@@ -24,6 +26,12 @@ public class MemberController {
 	@GetMapping("/members")
 	public Object get() {
 		return memberRepository.selectAll();
+	}
+	
+	@GetMapping("/members/{email:.+}")
+	public Object getEmail(@PathVariable String email) {
+		System.out.println("getEmail() # email="+email);
+		return memberRepository.selectEmail(email);
 	}
 
 	@PostMapping(value = { "/members" }, consumes = { MediaType.APPLICATION_JSON_VALUE })
@@ -39,31 +47,32 @@ public class MemberController {
 
 	@DeleteMapping("/members/{email}")
 	public void delete(@PathVariable String email) {
+		System.out.println(email);
 		memberRepository.delete(email);
 	}
 
-	// @PostMapping(value= {"/login"} ,consumes =
-	// {MediaType.APPLICATION_JSON_VALUE})
-	// public boolean login(@RequestBody Member member){
-	// return memberRepository.isValidUser(member);
-	// }
+	
+	@PostMapping(value = { "/members/{email}"}, consumes = { MediaType.APPLICATION_JSON_VALUE })
+	public Object post2(@RequestBody Member member) {
+			System.out.println("member =" + member);
+			
+			memberRepository.update(member);
+			System.out.println(memberRepository.selectEmail(member.getEmail()));
+			
+			return memberRepository.selectEmail(member.getEmail());
+//			return null;
+	}
+	
+	
 	@RequestMapping(value = { "/members/login" }, method = RequestMethod.POST)
 	public Object login1(@RequestBody Member member, HttpSession session) {
+		System.out.println(memberRepository.isValidUser(member));
 		if (memberRepository.isValidUser(member)) {
 			session.setAttribute("a", member.getEmail());
 			System.out.println(session.getAttribute("a"));
 			return session.getAttribute("a");
 		}
 		return "fail";
-	}
-
-	@RequestMapping(value = { "/members/login" }, method = RequestMethod.GET)
-	public Object login2(HttpSession session) {
-		System.out.println(session.getAttribute("a"));
-		if (session != null) {
-			return session.getAttribute("a");
-		}
-		return null;
 	}
 
 }

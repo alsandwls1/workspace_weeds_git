@@ -45,4 +45,15 @@ public class MemberRepositoryImpl implements MemberRepository {
 		return memberRepository.isValidUser(member);
 	}
 
+	@Override
+	public Member selectEmail(String email) {
+		return memberRepository.selectEmail(email);
+	}
+
+	@Override
+	public int update(Member member) {
+		System.out.println(member);
+		return memberRepository.update(member);
+	}
+
 }

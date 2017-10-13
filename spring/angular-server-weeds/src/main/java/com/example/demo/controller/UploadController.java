@@ -25,7 +25,6 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 
 import com.example.demo.service.StorageService;
 
-//@Controller
 @RestController
 public class UploadController {
 

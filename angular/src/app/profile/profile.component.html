@@ -53,7 +53,7 @@
       <td [appHidden]="!isShow3"></td>
       <td [appHidden]="isShow3">
         계정을삭제하시겠습니까?
-        <button type="submit" class="btn btn-danger btn-sm">yes</button>
+        <button type="submit" class="btn btn-danger btn-sm" (click)="removeMember()">yes</button>
       </td>
       <td><a class="md-icon" md-icon-button (click)="isShow3=!isShow3"><p class="glyphicon glyphicon-menu-down"></p></a></td>
     </tr>

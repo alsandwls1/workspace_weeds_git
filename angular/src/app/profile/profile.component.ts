@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Renderer, DoCheck,Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer, DoCheck, Output, EventEmitter } from '@angular/core';
 // import { DialogComponent, DialogService } from "ng2-bootstrap-modal";
 import { ConfirmComponent } from '../confirm/confirm.component';
 import { MdDialog } from '@angular/material';
@@ -25,13 +25,15 @@ export class ProfileComponent implements ConfirmModel, OnInit, DoCheck {
   message: string;
   dialogResult = "";
 
-  members: Member[] = [];
+  member: Member;
   errorMessage: string;
 
-/////////////////////////////////////
-  name:string = "김정민";
-  password:string = "a";
   img1:string = "/assets/image/character_01.png";
+  /////////////////////////////////////
+  email: string = ""
+  name: string = "";
+  password: string = "";
+  img: string = "";
 
   constructor(public dialog: MdDialog, private memberService: MemberService) {
   }
@@ -39,25 +41,81 @@ export class ProfileComponent implements ConfirmModel, OnInit, DoCheck {
   // updateImg(img: string): void{
   //   this.img1 = img;
   // }
-  removeMember(member: Member) {
-    this.memberService.removeMember(member)
-      .subscribe(members => this.members = members, error => this.errorMessage = <any>error)
+  removeMember() {
+    var id = localStorage.getItem("email");
+    this.memberService.removeMember(id).subscribe(result => {
+      console.log(result);
+    });
   }
 
+  // updateName(name: string): void {
+  //
+  //   this.isShow = true;
+  //
+  //   var id = localStorage.getItem("email");
+  //   this.memberService.updateName(name, id, this.password, this.img).then(res => {
+  //     var result = JSON.parse(res.text());
+  //     this.email = result.email;
+  //     this.name = result.name;
+  //     this.password = result.password;
+  //     this.img = result.profile_img;
+  //   });
+  // }
+  // updatePassword(pw: string): void {
+  //   this.isShow = true;
+  //
+  //   var id = localStorage.getItem("email");
+  //   this.memberService.updatePassword(this.name, id, pw, this.img).subscribe(result => {
+  //     console.log("resulut = " + result);
+  //   });
+  // }
   updateName(name: string): void{
-    this.name = name;
+
     this.isShow = true;
-  }
+
+    var id = localStorage.getItem("email");
+    this.memberService.updateName(name,id,this.password).then(res => {
+        var result = JSON.parse(res.text());
+        this.email = result.email;
+        this.name = result.name;
+        this.password = result.password;
+        this.img1 = "/assets/image/profile_default.png";
+      });
+    }
   updatePassword(pw: string): void{
-    this.password = pw;
     this.isShow2 = true;
+
+    var id = localStorage.getItem("email");
+    this.memberService.updatePassword(this.name,id,pw).subscribe(result => {
+      console.log("updatePassword(*) resulut = "+result.email);
+      console.log("updatePassword(*) resulut = "+result.password);
+      this.email = result.email;
+      this.name = result.name;
+      this.password = result.password;
+      this.img1 = "/assets/image/profile_default.png";
+    });
   }
 
   ngOnInit() {
+    console.log('ProfileComponent # ngOnInit() working');
+    this.getInfo();
+  }
+  ngDoCheck() {
+    // console.log(this.isShow);
   }
 
-  ngDoCheck() {
-    console.log(this.isShow);
+  getInfo() {
+    var id = localStorage.getItem("email");
+    console.log('currentId=' + id);
+    this.memberService.getInfo(id).subscribe(result => {
+      this.email = result.email;
+      this.name = result.name;
+      this.password = result.password;
+      this.img = result.profile_img;
+
+      // console.log("img =" + result.profile_img);
+      // console.log("getInfo =" + result);
+    });
   }
 
   openDialog() {
@@ -74,4 +132,18 @@ export class ProfileComponent implements ConfirmModel, OnInit, DoCheck {
       }
     });
   }
+  // openDialog() {
+  //   let dialogRef = this.dialog.open(ConfirmComponent, {
+  //     width: "600px"
+  //   });
+  //
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log(`Dialog save: ${result}`);
+  //     if (result) {
+  //       this.img = result;
+  //     } else {
+  //       this.img = this.img;
+  //     }
+  //   });
+  // }
 }
