@@ -33,5 +33,10 @@ public class ProjectRepositoryImpl implements ProjectRepository{
 	public List<Project> selectName(String p_name) {
 		return projectRepository.selectName(p_name);
 	}
+	
+	@Override
+	public Project searchDomain(String p_domain){
+		return projectRepository.searchDomain(p_domain);
+	}
 
 }

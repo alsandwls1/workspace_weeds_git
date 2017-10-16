@@ -21,19 +21,33 @@ export interface ConfirmModel {
 export class ConfirmComponent implements ConfirmModel, OnInit {
   title: string;
   message: string;
+  // images:any[] = [
+  //   {url:'assets/image/character_01.png'},
+  //   {url:'assets/image/character_02.png'},
+  //   {url:'assets/image/character_03.png'},
+  //   {url:'assets/image/character_04.png'},
+  //   {url:'assets/image/character_05.png'},
+  //   {url:'assets/image/character_06.png'},
+  //   {url:'assets/image/character_07.png'},
+  //   {url:'assets/image/character_08.png'},
+  //   {url:'assets/image/character_09.png'},``
+  //   {url:'assets/image/character_10.png'},
+  //   {url:'assets/image/character_11.png'},
+  //   {url:'assets/image/character_12.png'},
+  // ];
   images:any[] = [
-    {url:'assets/image/character_01.png'},
-    {url:'assets/image/character_02.png'},
-    {url:'assets/image/character_03.png'},
-    {url:'assets/image/character_04.png'},
-    {url:'assets/image/character_05.png'},
-    {url:'assets/image/character_06.png'},
-    {url:'assets/image/character_07.png'},
-    {url:'assets/image/character_08.png'},
-    {url:'assets/image/character_09.png'},
-    {url:'assets/image/character_10.png'},
-    {url:'assets/image/character_11.png'},
-    {url:'assets/image/character_12.png'},
+    {url:'/img/character_01.png'},
+    {url:'/img/character_02.png'},
+    {url:'/img/character_03.png'},
+    {url:'/img/character_04.png'},
+    {url:'/img/character_05.png'},
+    {url:'/img/character_06.png'},
+    {url:'/img/character_07.png'},
+    {url:'/img/character_08.png'},
+    {url:'/img/character_09.png'},
+    {url:'/img/character_10.png'},
+    {url:'/img/character_11.png'},
+    {url:'/img/character_12.png'},
   ];
 
   ////////////////////////

@@ -15,6 +15,9 @@
 	
 	<select id="selectName" resultType="Project">
 		select * from project where p_name like concat('%',#{p_name},'%')
-
+	</select>
+	
+	<select id="searchDomain" parameterType="String" resultType="Project">
+		select * from project where p_domain=#{p_domain}
 	</select>
 </mapper>

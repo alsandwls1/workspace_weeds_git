@@ -18,6 +18,7 @@ private subject = new Subject<any>();
     return this.http.get(`${this.searchUrl}/${search}`,JSON.stringify(search)).toPromise().then(res=> {
     let result = res.text();
     result = JSON.parse(result);
+    console.log('ProjectService # search() # result='+result);
     this.subject.next(result);
     });
 

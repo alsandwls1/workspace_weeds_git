@@ -28,12 +28,12 @@ export class ProfileComponent implements ConfirmModel, OnInit, DoCheck {
   member: Member;
   errorMessage: string;
 
-  img1:string = "/assets/image/character_01.png";
+  img1:string = "";
   /////////////////////////////////////
   email: string = ""
   name: string = "";
   password: string = "";
-  img: string = "";
+  // img: string = "";
 
   constructor(public dialog: MdDialog, private memberService: MemberService) {
   }
@@ -79,7 +79,7 @@ export class ProfileComponent implements ConfirmModel, OnInit, DoCheck {
         this.email = result.email;
         this.name = result.name;
         this.password = result.password;
-        this.img1 = "/assets/image/profile_default.png";
+        this.img1 = "/img/profile_default.png";
       });
     }
   updatePassword(pw: string): void{
@@ -92,7 +92,7 @@ export class ProfileComponent implements ConfirmModel, OnInit, DoCheck {
       this.email = result.email;
       this.name = result.name;
       this.password = result.password;
-      this.img1 = "/assets/image/profile_default.png";
+      this.img1 = "/img/profile_default.png";
     });
   }
 
@@ -111,7 +111,7 @@ export class ProfileComponent implements ConfirmModel, OnInit, DoCheck {
       this.email = result.email;
       this.name = result.name;
       this.password = result.password;
-      this.img = result.profile_img;
+      this.img1 = result.profile_img;
 
       // console.log("img =" + result.profile_img);
       // console.log("getInfo =" + result);

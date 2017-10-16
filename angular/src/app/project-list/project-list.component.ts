@@ -53,4 +53,9 @@ export class ProjectListComponent implements OnInit {
     this.router.navigate(['new-project']);
   }
 
+  goToDetail(item:string){
+    console.log('item='+item);
+    this.projectService.goToDetail(item);
+  }
+
 }

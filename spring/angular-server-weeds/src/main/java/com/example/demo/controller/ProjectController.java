@@ -29,7 +29,7 @@ public class ProjectController {
 	
 	@GetMapping("/projects/{p_name}")
 	public Object get(@PathVariable String p_name) {
-		System.out.println(projectRepository.selectName(p_name));
+//		System.out.println(projectRepository.selectName(p_name));
 		return projectRepository.selectName(p_name);
 	}
 	
@@ -41,12 +41,17 @@ public class ProjectController {
 		} catch (Exception e) {
 		}
 			return "0";
-	
 	}
 	
 	@DeleteMapping("/projects/{domain}")
 	public void delete(@PathVariable String domain) {
 		projectRepository.delete(domain);
+	}
+	
+	@GetMapping("/projects/view/{p_domain}")
+	public Object get2(@PathVariable String p_domain) {
+		System.out.println("get2 # project = "+projectRepository.searchDomain(p_domain));
+		return projectRepository.searchDomain(p_domain);
 	}
 	
 	

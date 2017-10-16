@@ -16,4 +16,6 @@ public interface ProjectRepository {
 //	public int count();
 	public List<Project> selectName(String p_name);
 	
+	public Project searchDomain(String p_domain);
+	
 }

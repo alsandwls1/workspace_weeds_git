@@ -15,6 +15,7 @@ export class ProjectService {
   private subject = new Subject<any>();
 
   private proejectsUrl: string = "http://localhost:8080/projects";
+  private proejectViewUrl: string = "http://localhost:8080/projects/view";
   private headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
 
   constructor(private http: Http) { }
@@ -29,18 +30,17 @@ export class ProjectService {
   addProject(p_name: string, p_domain: string): Promise<any> {
     let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    let project = { "p_name": p_name, "p_domain": p_domain, "p_day":null};
+    let project = { "p_name": p_name, "p_domain": p_domain, "p_day": null };
     console.log('project = ' + JSON.stringify(project));
 
     // return this.http.post(this.proejectsUrl, JSON.stringify(project), options)
     //   .map(this.extractDataForObject)
     //   .catch(this.handleError)
     return this.http.post(this.proejectsUrl, JSON.stringify(project), options)
-      .toPromise().then(res =>
-        {
-          var result = res.text();
-          this.subject.next({'result': result});
-    });
+      .toPromise().then(res => {
+        var result = res.text();
+        this.subject.next({ 'result': result });
+      });
 
   }
 
@@ -72,7 +72,14 @@ export class ProjectService {
 
   getObservable(): Observable<any> {
     return this.subject.asObservable();
+  }
 
+  goToDetail(item): Observable<any> {
+    const url = `${this.proejectViewUrl}/${item}`;
+    console.log('goToDetail='+url);
+    return this.http.get(url)
+      .map(this.extractData)
+      .catch(this.handleError);
   }
 
 }

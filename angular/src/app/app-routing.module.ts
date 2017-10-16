@@ -31,12 +31,18 @@ const routes: Routes = [
   { path: 'new-project', component: NewProjectComponent },
   // { path: 'project', component: ProjectComponent },
   // { path: 'demo-pro', component: DemoProComponent },
-  {path:'demo-pro', component:DemoProComponent, children: [
+  {path:'project-list/demo-pro', component:DemoProComponent, children: [
     {path:'', component:DemoContentComponent, outlet: 'router-content'},
     {path:'demo-notice', component:DemoNoticeComponent, outlet: 'router-content'},
     {path:'demo-file', component:DemoFileComponent, outlet: 'router-content'},
     {path:'demo-chat', component:DemoChatComponent, outlet: 'router-content'},
   ]},
+  // {path:'project-list/demo-pro', component:DemoProComponent, children: [
+  //   {path:':p_domain', component:DemoContentComponent, outlet: 'router-content'},
+  //   {path:'demo-notice', component:DemoNoticeComponent, outlet: 'router-content'},
+  //   {path:'demo-file', component:DemoFileComponent, outlet: 'router-content'},
+  //   {path:'demo-chat', component:DemoChatComponent, outlet: 'router-content'},
+  // ]},
 ];
 
 @NgModule({

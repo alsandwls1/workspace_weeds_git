@@ -1,14 +1,18 @@
 
 <md-sidenav-container fullscreen class="sidenav-container" style="top: 100px !important;">
+  <!-- 사이드바 -->
   <md-sidenav #sidenav mode="side" opened="true">
     <app-demo-side></app-demo-side>
   </md-sidenav>
   <button md-icon-button (click)="sidenav.toggle()">
     <i class="fa fa-list-ul"></i>
   </button>
+
   <div class="project-content">
+    <!-- 프로그래스 바 -->
     <app-demo-progress></app-demo-progress>
     <div class="tags" style="padding: 20px">
+      <!-- 컨텐츠 -->
       <router-outlet name="router-content"></router-outlet>
     </div>
 
