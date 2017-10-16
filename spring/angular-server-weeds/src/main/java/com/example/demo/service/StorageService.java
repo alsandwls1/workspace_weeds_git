@@ -10,22 +10,35 @@ import java.nio.file.Paths;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.repository.FileRepository;
+
 @Service
 public class StorageService {
+	
+	@Autowired
+	FileRepository fileRepository;
 
 	Logger log = LoggerFactory.getLogger(this.getClass().getName());
-	private final Path rootLocation = Paths.get("upload-dir");
+	long i = System.currentTimeMillis();
 
-	public void store(MultipartFile file) {
+	//	private final Path rootLocation = Paths.get("upload-dir");
+	private final Path rootLocation = Paths.get("D:/uploads");
+	
+	public void store(MultipartFile file) throws IOException {
 		try {
-			Files.copy(file.getInputStream(), this.rootLocation.resolve(file.getOriginalFilename()));
+			String name = String.valueOf(i); 
+			System.out.println(name+file.getOriginalFilename());
+			Files.copy(file.getInputStream(), this.rootLocation.resolve(name+file.getOriginalFilename()));
+			fileRepository.insertFile(file, name);
 		} catch (Exception e) {
+			System.out.println("중복중복!!");
 			throw new RuntimeException("FAIL!");
 		}
 	}
@@ -33,6 +46,7 @@ public class StorageService {
 	public Resource loadFile(String filename) {
 		try {
 			Path file = rootLocation.resolve(filename);
+			System.out.println("pathfile = "+file);
 			Resource resource = new UrlResource(file.toUri());
 			if (resource.exists() || resource.isReadable()) {
 				return resource;

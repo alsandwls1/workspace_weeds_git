@@ -7,8 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DetailsUploadComponent implements OnInit {
 
-    @Input() fileUpload: string;
-    // fileUpload: string;
+  @Input() fileUpload: string;
 
   constructor() { }
 

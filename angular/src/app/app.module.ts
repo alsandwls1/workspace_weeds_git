@@ -68,6 +68,8 @@ import { DemoChatComponent } from './demo-pro/demo-content/demo-chat/demo-chat.c
 import { FeedComponent } from './demo-pro/demo-content/demo-chat/feed/feed.component';
 import { ChatFormComponent } from './demo-pro/demo-content/demo-chat/chat-form/chat-form.component';
 import { MessageComponent } from './demo-pro/demo-content/demo-chat/message/message.component';
+import { ListUploadComponent } from './demo-pro/demo-content/demo-file/list-upload/list-upload.component';
+import { FormUploadComponent } from './demo-pro/demo-content/demo-file/form-upload/form-upload.component';
 
 @NgModule({
   declarations: [
@@ -101,6 +103,8 @@ import { MessageComponent } from './demo-pro/demo-content/demo-chat/message/mess
     FeedComponent,
     ChatFormComponent,
     MessageComponent,
+    ListUploadComponent,
+    FormUploadComponent,
   ],
   imports: [
     BrowserModule,
