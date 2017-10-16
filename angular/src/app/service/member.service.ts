@@ -74,37 +74,14 @@ export class MemberService {
       // ._catch(this.handleError);
   }
 
-  // updateName(name:string, id:string, password:string, img:string):Promise<any>{
-  //   console.log("id =" + id);
-  //   const url = `${this.membersUrl}/${id}`;
-  //
-  //   let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
-  //   let options = new RequestOptions({ headers: headers });
-  //   let member = { "email": id, "name":name, "password": password, "profile_img":img };
-  //   // return this.http.post(url,JSON.stringify(member), options)
-  //     // .map(this.extractDataForObject)
-  //     // ._catch(this.handleError);
-  //
-  //     return this.http.post(url, JSON.stringify(member), options).toPromise();
-  // }
-
-  // updatePassword(name:string,id:string,password:string, img:string):Observable<any>{
-  //   const url = `${this.membersUrl}/${id}`;
-  //   let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
-  //   let options = new RequestOptions({ headers: headers });
-  //   let member = { "email": id, "name":name, "password": password, "profile_img":img  };
-  //
-  //   return this.http.post(url, JSON.stringify(member), options)
-  //   // .map(this.extractDataForObject)
-  //   // ._catch(this.handleError);
-  // }
-  updateName(name:string, id:string, password:string):Promise<any>{
+  // updateName(name:string, id:string, password:string):Promise<any>{
+  updateName(name:string, id:string, password:string, img:string):Promise<any>{
     console.log("id =" + id);
     const url = `${this.membersUrl}/${id}`;
 
     let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    let member = { "email": id, "name":name, "password": password, "profile_img":null };
+    let member = { "email": id, "name":name, "password": password, "profile_img":img };
     // return this.http.post(url,JSON.stringify(member), options)
       // .map(this.extractDataForObject)
       // ._catch(this.handleError);
@@ -112,26 +89,27 @@ export class MemberService {
       return this.http.post(url, JSON.stringify(member), options).toPromise();
   }
 
-  updatePassword(name:string,id:string,password:string):Observable<any>{
+  // updatePassword(name:string,id:string,password:string):Observable<any>{
+  updatePassword(name:string,id:string,password:string, img:string):Observable<any>{
     const url = `${this.membersUrl}/${id}`;
     let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    let member = { "email": id, "name":name, "password": password };
+    let member = { "email": id, "name":name, "password": password, "profile_img":img };
 
     return this.http.post(url, JSON.stringify(member), options)
       .map(this.extractDataForObject)
       ._catch(this.handleError);
   }
 
-  updateImage(name:string, id:string, password:string, img:string):Observable<any>{
-    console.log("id =" + id);
+  updateImg(name:string, id:string, password:string, img:string):Observable<any>{
     const url = `${this.membersUrl}/${id}`;
     let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    let member = { "email": id, "name":name, "password": password, "profile_img":img  };
+    let member = { "email": id, "name":name, "password": password, "profile_img":img };
 
-    return this.http.post(url, JSON.stringify(member), options);
-    // return null;
+    return this.http.post(url, JSON.stringify(member), options)
+      .map(this.extractDataForObject)
+      ._catch(this.handleError);
   }
 
 

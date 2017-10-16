@@ -2144,7 +2144,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var ProfileComponent = (function () {
-    // img: string = "";
     function ProfileComponent(dialog, memberService) {
         this.dialog = dialog;
         this.memberService = memberService;
@@ -2153,65 +2152,43 @@ var ProfileComponent = (function () {
         this.isShow2 = true;
         this.isShow3 = true;
         this.dialogResult = "";
-        this.img1 = "";
         /////////////////////////////////////
+        this.img1 = "";
         this.email = "";
         this.name = "";
         this.password = "";
     }
-    // updateImg(img: string): void{
-    //   this.img1 = img;
-    // }
     ProfileComponent.prototype.removeMember = function () {
         var id = localStorage.getItem("email");
         this.memberService.removeMember(id).subscribe(function (result) {
             console.log(result);
         });
     };
-    // updateName(name: string): void {
-    //
-    //   this.isShow = true;
-    //
-    //   var id = localStorage.getItem("email");
-    //   this.memberService.updateName(name, id, this.password, this.img).then(res => {
-    //     var result = JSON.parse(res.text());
-    //     this.email = result.email;
-    //     this.name = result.name;
-    //     this.password = result.password;
-    //     this.img = result.profile_img;
-    //   });
-    // }
-    // updatePassword(pw: string): void {
-    //   this.isShow = true;
-    //
-    //   var id = localStorage.getItem("email");
-    //   this.memberService.updatePassword(this.name, id, pw, this.img).subscribe(result => {
-    //     console.log("resulut = " + result);
-    //   });
-    // }
     ProfileComponent.prototype.updateName = function (name) {
         var _this = this;
         this.isShow = true;
         var id = localStorage.getItem("email");
-        this.memberService.updateName(name, id, this.password).then(function (res) {
+        // this.memberService.updateName(name,id,this.password).then(res => {
+        this.memberService.updateName(name, id, this.password, this.img1).then(function (res) {
             var result = JSON.parse(res.text());
             _this.email = result.email;
             _this.name = result.name;
             _this.password = result.password;
-            _this.img1 = "/img/profile_default.png";
+            _this.img1 = result.profile_img;
         });
     };
     ProfileComponent.prototype.updatePassword = function (pw) {
         var _this = this;
         this.isShow2 = true;
         var id = localStorage.getItem("email");
-        this.memberService.updatePassword(this.name, id, pw).subscribe(function (result) {
+        // this.memberService.updatePassword(this.name,id,pw).subscribe(result => {
+        this.memberService.updatePassword(this.name, id, pw, this.img1).subscribe(function (result) {
             console.log("updatePassword(*) resulut = " + result.email);
             console.log("updatePassword(*) resulut = " + result.password);
             _this.email = result.email;
             _this.name = result.name;
             _this.password = result.password;
-            _this.img1 = "/img/profile_default.png";
+            _this.img1 = result.profile_img;
         });
     };
     ProfileComponent.prototype.ngOnInit = function () {
@@ -2234,6 +2211,17 @@ var ProfileComponent = (function () {
             // console.log("getInfo =" + result);
         });
     };
+    ProfileComponent.prototype.updateImg = function (img) {
+        var _this = this;
+        var id = localStorage.getItem("email");
+        // this.memberService.updateName(name,id,this.password).then(res => {
+        this.memberService.updateImg(this.name, id, this.password, img).subscribe(function (result) {
+            _this.email = result.email;
+            _this.name = result.name;
+            _this.password = result.password;
+            _this.img1 = result.profile_img;
+        });
+    };
     ProfileComponent.prototype.openDialog = function () {
         var _this = this;
         var dialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_1__confirm_confirm_component__["a" /* ConfirmComponent */], {
@@ -2242,7 +2230,10 @@ var ProfileComponent = (function () {
         dialogRef.afterClosed().subscribe(function (result) {
             console.log("Dialog save: " + result);
             if (result) {
-                _this.img1 = result;
+                var id = localStorage.getItem("email");
+                console.log(result.email);
+                console.log(result);
+                _this.updateImg(result);
             }
             else {
                 _this.img1 = _this.img1;
@@ -2911,57 +2902,36 @@ var MemberService = (function () {
             .map(this.extractDataForObject);
         // ._catch(this.handleError);
     };
-    // updateName(name:string, id:string, password:string, img:string):Promise<any>{
-    //   console.log("id =" + id);
-    //   const url = `${this.membersUrl}/${id}`;
-    //
-    //   let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
-    //   let options = new RequestOptions({ headers: headers });
-    //   let member = { "email": id, "name":name, "password": password, "profile_img":img };
-    //   // return this.http.post(url,JSON.stringify(member), options)
-    //     // .map(this.extractDataForObject)
-    //     // ._catch(this.handleError);
-    //
-    //     return this.http.post(url, JSON.stringify(member), options).toPromise();
-    // }
-    // updatePassword(name:string,id:string,password:string, img:string):Observable<any>{
-    //   const url = `${this.membersUrl}/${id}`;
-    //   let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
-    //   let options = new RequestOptions({ headers: headers });
-    //   let member = { "email": id, "name":name, "password": password, "profile_img":img  };
-    //
-    //   return this.http.post(url, JSON.stringify(member), options)
-    //   // .map(this.extractDataForObject)
-    //   // ._catch(this.handleError);
-    // }
-    MemberService.prototype.updateName = function (name, id, password) {
-        console.log("id =" + id);
-        var url = this.membersUrl + "/" + id;
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Headers */]({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        var member = { "email": id, "name": name, "password": password, "profile_img": null };
-        // return this.http.post(url,JSON.stringify(member), options)
-        // .map(this.extractDataForObject)
-        // ._catch(this.handleError);
-        return this.http.post(url, JSON.stringify(member), options).toPromise();
-    };
-    MemberService.prototype.updatePassword = function (name, id, password) {
-        var url = this.membersUrl + "/" + id;
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Headers */]({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        var member = { "email": id, "name": name, "password": password };
-        return this.http.post(url, JSON.stringify(member), options)
-            .map(this.extractDataForObject)
-            ._catch(this.handleError);
-    };
-    MemberService.prototype.updateImage = function (name, id, password, img) {
+    // updateName(name:string, id:string, password:string):Promise<any>{
+    MemberService.prototype.updateName = function (name, id, password, img) {
         console.log("id =" + id);
         var url = this.membersUrl + "/" + id;
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Headers */]({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
         var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
         var member = { "email": id, "name": name, "password": password, "profile_img": img };
-        return this.http.post(url, JSON.stringify(member), options);
-        // return null;
+        // return this.http.post(url,JSON.stringify(member), options)
+        // .map(this.extractDataForObject)
+        // ._catch(this.handleError);
+        return this.http.post(url, JSON.stringify(member), options).toPromise();
+    };
+    // updatePassword(name:string,id:string,password:string):Observable<any>{
+    MemberService.prototype.updatePassword = function (name, id, password, img) {
+        var url = this.membersUrl + "/" + id;
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Headers */]({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        var member = { "email": id, "name": name, "password": password, "profile_img": img };
+        return this.http.post(url, JSON.stringify(member), options)
+            .map(this.extractDataForObject)
+            ._catch(this.handleError);
+    };
+    MemberService.prototype.updateImg = function (name, id, password, img) {
+        var url = this.membersUrl + "/" + id;
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Headers */]({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        var member = { "email": id, "name": name, "password": password, "profile_img": img };
+        return this.http.post(url, JSON.stringify(member), options)
+            .map(this.extractDataForObject)
+            ._catch(this.handleError);
     };
     MemberService.prototype.extractDataForObject = function (res) {
         console.log('MemberService # extractDataForObject() working...');

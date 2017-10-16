@@ -28,19 +28,15 @@ export class ProfileComponent implements ConfirmModel, OnInit, DoCheck {
   member: Member;
   errorMessage: string;
 
-  img1:string = "";
   /////////////////////////////////////
+  img1: string = "";
   email: string = ""
   name: string = "";
   password: string = "";
-  // img: string = "";
 
   constructor(public dialog: MdDialog, private memberService: MemberService) {
   }
 
-  // updateImg(img: string): void{
-  //   this.img1 = img;
-  // }
   removeMember() {
     var id = localStorage.getItem("email");
     this.memberService.removeMember(id).subscribe(result => {
@@ -48,51 +44,32 @@ export class ProfileComponent implements ConfirmModel, OnInit, DoCheck {
     });
   }
 
-  // updateName(name: string): void {
-  //
-  //   this.isShow = true;
-  //
-  //   var id = localStorage.getItem("email");
-  //   this.memberService.updateName(name, id, this.password, this.img).then(res => {
-  //     var result = JSON.parse(res.text());
-  //     this.email = result.email;
-  //     this.name = result.name;
-  //     this.password = result.password;
-  //     this.img = result.profile_img;
-  //   });
-  // }
-  // updatePassword(pw: string): void {
-  //   this.isShow = true;
-  //
-  //   var id = localStorage.getItem("email");
-  //   this.memberService.updatePassword(this.name, id, pw, this.img).subscribe(result => {
-  //     console.log("resulut = " + result);
-  //   });
-  // }
-  updateName(name: string): void{
-
+  updateName(name: string): void {
     this.isShow = true;
 
     var id = localStorage.getItem("email");
-    this.memberService.updateName(name,id,this.password).then(res => {
-        var result = JSON.parse(res.text());
-        this.email = result.email;
-        this.name = result.name;
-        this.password = result.password;
-        this.img1 = "/img/profile_default.png";
-      });
-    }
-  updatePassword(pw: string): void{
-    this.isShow2 = true;
-
-    var id = localStorage.getItem("email");
-    this.memberService.updatePassword(this.name,id,pw).subscribe(result => {
-      console.log("updatePassword(*) resulut = "+result.email);
-      console.log("updatePassword(*) resulut = "+result.password);
+    // this.memberService.updateName(name,id,this.password).then(res => {
+    this.memberService.updateName(name, id, this.password, this.img1).then(res => {
+      var result = JSON.parse(res.text());
       this.email = result.email;
       this.name = result.name;
       this.password = result.password;
-      this.img1 = "/img/profile_default.png";
+      this.img1 = result.profile_img;
+    });
+  }
+
+  updatePassword(pw: string): void {
+    this.isShow2 = true;
+
+    var id = localStorage.getItem("email");
+    // this.memberService.updatePassword(this.name,id,pw).subscribe(result => {
+    this.memberService.updatePassword(this.name, id, pw, this.img1).subscribe(result => {
+      console.log("updatePassword(*) resulut = " + result.email);
+      console.log("updatePassword(*) resulut = " + result.password);
+      this.email = result.email;
+      this.name = result.name;
+      this.password = result.password;
+      this.img1 = result.profile_img;
     });
   }
 
@@ -100,6 +77,7 @@ export class ProfileComponent implements ConfirmModel, OnInit, DoCheck {
     console.log('ProfileComponent # ngOnInit() working');
     this.getInfo();
   }
+
   ngDoCheck() {
     // console.log(this.isShow);
   }
@@ -118,6 +96,18 @@ export class ProfileComponent implements ConfirmModel, OnInit, DoCheck {
     });
   }
 
+  updateImg(img: string): void {
+    var id = localStorage.getItem("email");
+
+    // this.memberService.updateName(name,id,this.password).then(res => {
+    this.memberService.updateImg(this.name, id, this.password, img).subscribe(result => {
+      this.email = result.email;
+      this.name = result.name;
+      this.password = result.password;
+      this.img1 = result.profile_img;
+    });
+  }
+
   openDialog() {
     let dialogRef = this.dialog.open(ConfirmComponent, {
       width: "600px"
@@ -126,7 +116,11 @@ export class ProfileComponent implements ConfirmModel, OnInit, DoCheck {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog save: ${result}`);
       if (result) {
-        this.img1 = result;
+        var id = localStorage.getItem("email");
+        console.log(result.email)
+        console.log(result);
+        this.updateImg(result);
+
       } else {
         this.img1 = this.img1;
       }
