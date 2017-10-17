@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'confirm', component: ConfirmComponent },
   { path: 'project-list', component: ProjectListComponent },
-  { path: 'new-project', component: NewProjectComponent },
+  { path: 'project-list/new-project', component: NewProjectComponent },
   // { path: 'project', component: ProjectComponent },
   // { path: 'demo-pro', component: DemoProComponent },
   {path:'project-list/demo-pro', component:DemoProComponent, children: [

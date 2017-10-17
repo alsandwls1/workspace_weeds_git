@@ -35,7 +35,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 exports.i(__webpack_require__("../../../../css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../../../../postcss-loader/index.js?{\"ident\":\"postcss\"}!../../../material/prebuilt-themes/indigo-pink.css"), "");
 
 // module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n/*@import '~@angular/material/prebuilt-themes/deeppuple-amber.css';*/\n/*import ~@angular/material/prebuilt-themes/pink-bluegrey.css';*/\n/*import ~@angular/material/prebuilt-themes/purple-green.css';*/\n\napp-chat-form{\n    width: 100%;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    white-space: nowrap;\n    overflow: none;\n}\n\n.message {\n  display: block;\n  height: auto;\n}\n", ""]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\r\n/*@import '~@angular/material/prebuilt-themes/deeppuple-amber.css';*/\r\n/*import ~@angular/material/prebuilt-themes/pink-bluegrey.css';*/\r\n/*import ~@angular/material/prebuilt-themes/purple-green.css';*/\r\n\r\napp-chat-form{\r\n    width: 100%;\r\n    display: -webkit-box;\r\n    display: -ms-flexbox;\r\n    display: flex;\r\n    white-space: nowrap;\r\n    overflow: none;\r\n}\r\n\r\n.message {\r\n  display: block;\r\n  height: auto;\r\n}\r\n", ""]);
 
 // exports
 
